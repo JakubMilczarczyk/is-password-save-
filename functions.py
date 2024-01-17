@@ -29,8 +29,6 @@ def check_password_basics(password):
     return True
 
 
-# check_password_basics('Hasło!')
-
 def is_password_save(password):
     """Take password
     encode it and send request API to download hashes with the same 5 sighs,
@@ -53,8 +51,7 @@ def is_password_save(password):
                     print(f'Hasło wyciekło {num_of_use} razy! \nKaniecznie je zmień!')
                     return
             print(f'Hasło "{password}" jest bezpieczne!')
-            save_passwords.write(password)
+            save_passwords.write(password.strip())
         else:
             print('Coś poszło nie tak. Sprawdź logi.')      # TODO logi
 
-# is_password_save('][poKL:"')
