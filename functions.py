@@ -13,10 +13,6 @@ def check_password_basics(password):
         print('Hasło nie spełnia podstawowych założeń.')
         return False
 
-    if not search("[!@#$%^&*(),.?\":{}|<>]", password):
-        print('Hasło nie spełnia podstawowych założeń.')
-        return False
-
     if not any(char.isupper() for char in password):
         print('Hasło nie spełnia podstawowych założeń.')
         return False
