@@ -15,14 +15,13 @@ class Validator(ABC):
 
 
 class LengthValidator(Validator):
-    def __init__(self, text):
+    def __init__(self, text, min_length=8):
         self.text = text
+        self.min_length = min_length
 
-    def is_valid(self):
-        if len(self.text) < 8:
-            print(f'Hasło: "{self.text}" nie spełnia podstawowych założeń.')
-            return False
-        return True
+    def is_valid(self) -> bool:
+
+        return len(self.text) >= self.min_length
 
 
 class HasDigitCharacterValidator(Validator):
@@ -93,11 +92,13 @@ class IsNotPwnedValidator(Validator):
                     # TODO logi print(response)
                     if rest_of_hash == clear_hash[5:]:
                         print(f'Hasło wyciekło {num_of_use} razy! \nKaniecznie je zmień!')
-                        return
+                        return False
                 print(f'Hasło "{self.text}" jest bezpieczne!')
                 save_passwords.write(self.text.strip())
+                return True
             else:
                 print('Coś poszło nie tak. Sprawdź logi.')  # TODO logi
+                return False
 
 
 class PasswordValidator:
