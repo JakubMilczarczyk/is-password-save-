@@ -1,4 +1,4 @@
-from requests import get
+import pytest
 from validators import (
     LengthValidator,
     HasDigitCharacterValidator,
@@ -6,11 +6,12 @@ from validators import (
     HasLowerCharacterValidator,
     HasSpecialCharacterValidator,
     IsNotPwnedValidator,
+    ValidationError,
     PasswordValidator
 )
 
 
-def test_good_length_validator():
+def test_length_validator_positive():
     password = LengthValidator('password')
 
     result = password.is_valid()
@@ -24,115 +25,112 @@ def test_good_length_validator():
     assert result is True
 
 
-def test_bad_length_validator():
+def test_length_validator_negative():
     password = LengthValidator('pass', 8)
+
+    with pytest.raises(ValidationError) as error:
+        password.is_valid()
+
+    assert f'Password: "pass" is too short!' in str(error.value)
+
+
+def test_has_digit_validator_positive():
+    password = HasDigitCharacterValidator('password1')
 
     result = password.is_valid()
 
-    assert result is False
+    assert result is True
 
 
-def test_good_has_digit_validator():
-    password = HasDigitCharacterValidator('password1')
-
-    resoult = password.is_valid()
-
-    assert resoult is True
-
-
-def test_bad_has_digit_validator():
+def test_has_digit_validator_negative():
     password = HasDigitCharacterValidator('password')
 
-    resoult = password.is_valid()
+    with pytest.raises(ValidationError) as error:
+        password.is_valid()
+        assert f'Password: "password" has not number.' in str(error.value)
 
-    assert resoult is False
 
-
-def test_good_has_upper_validator():
+def test_has_upper_validator_positive():
     password = HasUpperCharacterValidator('Password')
 
-    resoult = password.is_valid()
+    result = password.is_valid()
 
-    assert resoult is True
+    assert result is True
 
 
-def test_bad_has_upper_validator():
+def test_has_upper_validator_negative():
     password = HasUpperCharacterValidator('password')
 
-    resoult = password.is_valid()
+    with pytest.raises(ValidationError) as error:
+        password.is_valid()
+        assert f'Password: "password" has not Uppercase character!' in str(error.value)
 
-    assert resoult is False
 
-
-def test_good_has_lower_validator():
+def test_has_lower_validator_positive():
     password = HasLowerCharacterValidator('Password1!')
 
-    resoult = password.is_valid()
+    result = password.is_valid()
 
-    assert resoult is True
+    assert result is True
 
 
-def test_bad_has_lower_validator():
+def test_has_lower_validator_negative():
     password = HasLowerCharacterValidator('PASSWORD1!')
 
-    resoult = password.is_valid()
+    with pytest.raises(ValidationError) as error:
+        password.is_valid()
+        assert f'Password: "PASSWORD1!" has nat Lowercase character!' in str(error.value)
 
-    assert resoult is False
 
-
-def test_good_has_special_character_validator():
+def test_has_special_character_validator_positive():
     password = HasSpecialCharacterValidator('Password1!')
 
-    resoult = password.is_valid()
+    result = password.is_valid()
 
-    assert resoult is True
+    assert result is True
 
 
-def test_bad_has_special_character_validator():
+def test_has_special_character_validator_negative():
     password = HasSpecialCharacterValidator('Password1')
 
-    resoult = password.is_valid()
+    with pytest.raises(ValidationError) as error:
+        password.is_valid()
+        assert f'Password: "Password1" has not special character!' in str(error.value)
 
-    assert resoult is False
 
-
-def test_request(requests_mock):    # TODO ogarnać ten test
+def test_is_not_pwned_validator_positive(requests_mock):
     password = IsNotPwnedValidator('Test')
     data = '00E15AD182216C9D32E37AD227083C11A6D:2\n01AC1B60A56131BEC102808D32D4DA91E29:11\n'
+
     requests_mock.get('https://api.pwnedpasswords.com/range/640ab', text=data)
     assert password.is_valid() is True
 
-# def test_wrong_password():
-#     password1 = 'zaq1@W'
-#     password2 = 'zaq!@WSX'
-#     password3 = 'zaq12WSX'
-#     password4 = 'zaq1@wsx'
-#     password5 = 'ZAQ1@WSX'
-#
-#     checking = (
-#         check_password_basics(password1),
-#         check_password_basics(password2),
-#         check_password_basics(password3),
-#         check_password_basics(password4),
-#         check_password_basics(password5)
-#     )
-#
-#     assert checking == (False, False, False, False, False)
-#
-#
-# def check_first_line_low_then(x):
-#     response = get('https://api.pwnedpasswords.com/range/640ab')
-#     counter = response.text.splitlines()[0].split(':')[1]
-#
-#     if int(counter) >= x:
-#         return True
-#     else:
-#         return False
-#
-#
-# def test_request(requests_mock):
-#     data = '00E15AD182216C9D32E37AD227083C11A6D:2\n01AC1B60A56131BEC102808D32D4DA91E29:11\n'
-#     requests_mock.get('https://api.pwnedpasswords.com/range/640ab', text=data)
-#     assert check_first_line_low_then(1) == True
-#
-#
+
+def test_is_not_pwned_validator_negative(requests_mock):
+
+    # hash: 640ab2bae07bedc4c163f679a746f7ab7fb5d1fa
+    data = '00E15AD182216C9D32E37AD227083C11A6D:2\n2bae07bedc4c163f679a746f7ab7fb5d1fa:11'
+
+    with pytest.raises(ValidationError) as error:
+        password_validator = IsNotPwnedValidator('Test')
+        requests_mock.get('https://api.pwnedpasswords.com/range/640ab', text=data)
+        password_validator.is_valid()
+        assert f'Password: "Test" has leaked 11 times!!!' in str(error.value)
+
+
+def test_password_validator_positive():
+    password = PasswordValidator('Klak12Gs!')
+    result = password.is_valid()
+
+    assert result is True
+
+
+def test_password_validator_negative():  # TODO rozkmiń test
+    # password = PasswordValidator('Password!')
+
+    with pytest.raises(ValidationError) as error:
+        password = PasswordValidator('Password!')
+        password.is_valid()
+        # password = HasDigitCharacterValidator('Password!')
+        password.is_valid()
+        assert f'Password: "Password!" has not number.' in str(error.value)
