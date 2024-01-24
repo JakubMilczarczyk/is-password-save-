@@ -83,7 +83,7 @@ def test_has_lower_validator_negative():
 
 
 def test_has_special_character_validator_positive():
-    password = HasSpecialCharacterValidator('Password1!')
+    password = HasSpecialCharacterValidator('Password1[')
 
     result = password.is_valid()
 
@@ -91,9 +91,9 @@ def test_has_special_character_validator_positive():
 
 
 def test_has_special_character_validator_negative():
-    password = HasSpecialCharacterValidator('Password1')
 
     with pytest.raises(ValidationError) as error:
+        password = HasSpecialCharacterValidator('Password1')
         password.is_valid()
         assert f'Password: "Password1" has not special character!' in str(error.value)
 
@@ -107,8 +107,6 @@ def test_is_not_pwned_validator_positive(requests_mock):
 
 
 def test_is_not_pwned_validator_negative(requests_mock):
-
-    # hash: 640ab2bae07bedc4c163f679a746f7ab7fb5d1fa
     data = '00E15AD182216C9D32E37AD227083C11A6D:2\n2bae07bedc4c163f679a746f7ab7fb5d1fa:11'
 
     with pytest.raises(ValidationError) as error:
@@ -120,17 +118,13 @@ def test_is_not_pwned_validator_negative(requests_mock):
 
 def test_password_validator_positive():
     password = PasswordValidator('Klak12Gs!')
-    result = password.is_valid()
 
-    assert result is True
+    assert password.is_valid() is True
 
 
-def test_password_validator_negative():  # TODO rozkmiń test
-    # password = PasswordValidator('Password!')
-
+def test_password_validator_negative():
     with pytest.raises(ValidationError) as error:
         password = PasswordValidator('Password!')
         password.is_valid()
-        # password = HasDigitCharacterValidator('Password!')
-        password.is_valid()
+
         assert f'Password: "Password!" has not number.' in str(error.value)
