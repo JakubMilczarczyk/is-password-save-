@@ -1,7 +1,6 @@
-
-
 from validators import (
     PasswordValidator,
+    ValidationError
 )
 
 
@@ -13,9 +12,12 @@ if __name__ == '__main__':
         for line in passwords:
             count += 1
             print(f'Linia {count}\n Sprawdzam hasło "{line.strip()}".')
-            if PasswordValidator(line.strip()).is_valid() is True:
-                save_passwords.write(line.strip())
+            try:
+                if PasswordValidator(line.strip()).is_valid() is True:
+                    save_passwords.write(line.strip())
+            except ValidationError as error:
+                print(error)
+
             print('---' * 6, '\n')
 
-    # Dodaje sie znak nowej linii przy bezpiecznych hasłach
-    # Pilnować logów czyli takie printy sprawdzające co się dzieje w kodzie.
+

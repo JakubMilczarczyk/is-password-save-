@@ -4,18 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2c7864e6-aab0-40c1-9a0f-fb82db13dcc2" name="Changes" comment="Working tests for functions">
-      <change afterPath="$PROJECT_DIR$/.idea/IsPasswordSafe.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/exceptions.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/password_security.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/validators.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/functions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/functions_test.py" afterDir="false" />
+    <list default="true" id="2c7864e6-aab0-40c1-9a0f-fb82db13dcc2" name="Changes" comment="almost done">
+      <change afterPath="$PROJECT_DIR$/.pylintrc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Readme.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/password_validators/.pylintrc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/password_validators/Readme.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/password_validators/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/password_validators/validators.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/password_validators/validators_test.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/__main__.py" beforeDir="false" afterPath="$PROJECT_DIR$/__main__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/check_password.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/password_security.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/passwords.txt" beforeDir="false" afterPath="$PROJECT_DIR$/passwords.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/validators.py" beforeDir="false" afterPath="$PROJECT_DIR$/validators.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,6 +37,20 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;JakubMiczarczyk&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="930bae19-da90-4808-a2f7-9202b881d76d" />
+        <option name="url" value="https://github.com/JakubMiczarczyk/is-password-save-.git" />
+      </UrlAndAccount>
+    </option>
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
 }</component>
@@ -41,19 +60,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python tests.Python tests in functions_test.py.executor&quot;: &quot;Run&quot;,
-    &quot;Python.Is it correct.executor&quot;: &quot;Run&quot;,
-    &quot;Python.check password.executor&quot;: &quot;Run&quot;,
-    &quot;Python.check_password.executor&quot;: &quot;Run&quot;,
-    &quot;Python.functions.executor&quot;: &quot;Run&quot;,
-    &quot;Python.request.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python tests.Python tests in functions_test.py.executor": "Run",
+    "Python tests.Python tests in validators_test.py.executor": "Run",
+    "Python.Is it correct.executor": "Run",
+    "Python.__main__.executor": "Run",
+    "Python.check password.executor": "Run",
+    "Python.check_password.executor": "Run",
+    "Python.functions.executor": "Run",
+    "Python.main.executor": "Debug",
+    "Python.request.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "C:/Users/kubab/PycharmProjects/IsPasswordSafe/password_validators"
   }
-}</component>
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\kubab\PycharmProjects\IsPasswordSafe\password_validators" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -86,7 +114,39 @@
       <option name="project" value="LOCAL" />
       <updated>1705490588578</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="change functions on validators with classes, new test need to be finished">
+      <option name="closed" value="true" />
+      <created>1705619258537</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1705619258537</updated>
+    </task>
+    <task id="LOCAL-00004" summary="tests works, request test need to be done">
+      <option name="closed" value="true" />
+      <created>1705787676116</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1705787676116</updated>
+    </task>
+    <task id="LOCAL-00005" summary="need to fix PasswordValidator and tests">
+      <option name="closed" value="true" />
+      <created>1705881930145</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1705881930145</updated>
+    </task>
+    <task id="LOCAL-00006" summary="almost done">
+      <option name="closed" value="true" />
+      <created>1706138025383</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1706138025383</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -104,6 +164,10 @@
     <MESSAGE value="Open txt and check basicks for password" />
     <MESSAGE value="functions update, in check have working hashing" />
     <MESSAGE value="Working tests for functions" />
-    <option name="LAST_COMMIT_MESSAGE" value="Working tests for functions" />
+    <MESSAGE value="change functions on validators with classes, new test need to be finished" />
+    <MESSAGE value="tests works, request test need to be done" />
+    <MESSAGE value="need to fix PasswordValidator and tests" />
+    <MESSAGE value="almost done" />
+    <option name="LAST_COMMIT_MESSAGE" value="almost done" />
   </component>
 </project>
